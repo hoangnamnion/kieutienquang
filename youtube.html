@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Premium - Mua Ngay</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #f7f8fa; }
+    .shop-container { max-width: 1200px; margin: 0 auto; padding: 32px 12px; display: flex; gap: 40px; }
+    .shop-left { flex: 1.2; }
+    .shop-right { flex: 1; }
+    .shop-img-box { text-align: center; margin-bottom: 18px; }
+    .shop-img { width: 180px; height: 180px; border-radius: 24px; background: #ececec; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto; box-shadow: 0 4px 24px rgba(0,0,0,0.07); }
+    .shop-badge { display: inline-block; background: #f3f4f6; color: #222; border-radius: 16px; padding: 4px 16px; font-size: 0.93rem; font-weight: 500; margin-bottom: 10px; }
+    .shop-title { font-size: 2.2rem; font-weight: bold; margin-bottom: 10px; }
+    .shop-rating { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+    .shop-stars { display: flex; gap: 2px; }
+    .shop-stars svg { width: 22px; height: 22px; }
+    .shop-rating-count { color: #888; font-size: 1.05rem; }
+    .shop-features-box { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); padding: 22px 24px; margin-bottom: 24px; }
+    .shop-features-title { font-size: 1.15rem; font-weight: bold; margin-bottom: 12px; }
+    .shop-features-list { margin: 0; padding: 0; list-style: none; }
+    .shop-features-list p { display: flex; align-items: center; gap: 8px; color: #22c55e; font-size: 1.05rem; margin-bottom: 7px; }
+    .shop-features-list svg { flex-shrink: 0; }
+    .shop-desc-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 7px; }
+    .shop-desc { color: #444; font-size: 1.01rem; line-height: 1.7; }
+    .shop-buy-box { background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); padding: 32px 28px 24px 28px; }
+    .shop-buy-title { font-size: 1.25rem; font-weight: bold; margin-bottom: 18px; }
+    .shop-buy-price-row { display: flex; align-items: center; gap: 16px; margin-bottom: 6px; }
+    .shop-buy-price { font-size: 2.2rem; font-weight: bold; color: #2563eb; }
+    .shop-buy-old { font-size: 1.3rem; color: #aaa; text-decoration: line-through; }
+    .shop-buy-save { background: #d1fae5; color: #059669; font-size: 1rem; border-radius: 16px; padding: 4px 14px; display: inline-block; margin-bottom: 10px; margin-top: 6px; font-weight: 500; }
+    .shop-buy-label { font-size: 1rem; color: #444; margin-bottom: 6px; font-weight: 500; }
+    .shop-buy-select, .shop-buy-input { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1.5px solid #e5e7eb; font-size: 1rem; margin-bottom: 16px; }
+    .shop-buy-btn { width: 100%; background: linear-gradient(90deg, #6366f1 0%, #a78bfa 100%); color: #fff; font-size: 1.15rem; font-weight: bold; border: none; border-radius: 8px; padding: 16px 0; margin: 18px 0 10px 0; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.18s; }
+    .shop-buy-btn:hover { background: linear-gradient(90deg, #3730a3 0%, #a78bfa 100%); }
+    .shop-buy-guarantee { display: flex; justify-content: space-between; gap: 8px; border-top: 1px solid #eee; padding-top: 18px; margin-top: 10px; margin-bottom: 10px; }
+    .shop-buy-guarantee-item { text-align: center; flex: 1; }
+    .shop-buy-guarantee-item svg { margin: 0 auto 4px auto; display: block; }
+    .shop-buy-guarantee-label { font-size: 0.98rem; font-weight: 500; color: #222; }
+    .shop-buy-guarantee-desc { font-size: 0.93rem; color: #888; }
+    .shop-buy-note { background: #eff6ff; color: #2563eb; border-radius: 8px; padding: 12px 14px; font-size: 0.98rem; margin-top: 12px; display: flex; align-items: flex-start; gap: 8px; }
+    .shop-buy-note svg { flex-shrink: 0; margin-top: 2px; }
+    @media (max-width: 900px) {
+      .shop-container { flex-direction: column; gap: 24px; }
+      .shop-buy-box { padding: 22px 8px 16px 8px; }
+    }
+    @media (max-width: 600px) {
+      .shop-container { padding: 10px 2px; }
+      .shop-buy-box { padding: 10px 2px 8px 2px; }
+      .shop-img { width: 120px; height: 120px; }
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="shop-back-btn">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:7px;"><path d="M15 19l-7-7 7-7" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Về Trang Chủ
+  </a>
+  <div class="shop-container">
+    <!-- Left -->
+    <div class="shop-left">
+      <div class="shop-img-box">
+        <div class="shop-img">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" alt="YouTube Premium" style="width:90px;height:90px;object-fit:contain;">
+        </div>
+        <div class="shop-badge">Phổ Biến Nhất</div>
+      </div>
+      <div class="shop-title">YouTube Premium</div>
+      <div class="shop-rating">
+        <span class="shop-stars">
+          <svg fill="#FBBF24" viewBox="0 0 20 20"><path d="M10 2.5l2.39 5.09 5.61.41-4.25 3.87 1.32 5.53L10 14.13l-5.07 3.27 1.32-5.53L2 8l5.61-.41L10 2.5z"/></svg>
+          <svg fill="#FBBF24" viewBox="0 0 20 20"><path d="M10 2.5l2.39 5.09 5.61.41-4.25 3.87 1.32 5.53L10 14.13l-5.07 3.27 1.32-5.53L2 8l5.61-.41L10 2.5z"/></svg>
+          <svg fill="#FBBF24" viewBox="0 0 20 20"><path d="M10 2.5l2.39 5.09 5.61.41-4.25 3.87 1.32 5.53L10 14.13l-5.07 3.27 1.32-5.53L2 8l5.61-.41L10 2.5z"/></svg>
+          <svg fill="#FBBF24" viewBox="0 0 20 20"><path d="M10 2.5l2.39 5.09 5.61.41-4.25 3.87 1.32 5.53L10 14.13l-5.07 3.27 1.32-5.53L2 8l5.61-.41L10 2.5z"/></svg>
+          <svg fill="#E5E7EB" viewBox="0 0 20 20"><path d="M10 2.5l2.39 5.09 5.61.41-4.25 3.87 1.32 5.53L10 14.13l-5.07 3.27 1.32-5.53L2 8l5.61-.41L10 2.5z"/></svg>
+        </span>
+        <span class="shop-rating-count">4.9 (1250 đánh giá)</span>
+      </div>
+      <div class="shop-features-box">
+        <div class="shop-features-title">Những Gì Bao Gồm</div>
+        <div class="shop-features-list">
+          <p><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#22c55e" stroke-width="2"/><path stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 12l2 2 4-4"/></svg> Không có quảng cáo trên bất kỳ video nào</p>
+          <p><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#22c55e" stroke-width="2"/><path stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 12l2 2 4-4"/></svg> Phát nền khi sử dụng ứng dụng khác</p>
+          <p><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#22c55e" stroke-width="2"/><path stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 12l2 2 4-4"/></svg> Bao gồm YouTube Music Premium</p>
+          <p><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#22c55e" stroke-width="2"/><path stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 12l2 2 4-4"/></svg> Tải offline cho di động</p>
+          <p><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#22c55e" stroke-width="2"/><path stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 12l2 2 4-4"/></svg> Truy cập YouTube Originals</p>
+          <p><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#22c55e" stroke-width="2"/><path stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 12l2 2 4-4"/></svg> Chế độ picture-in-picture</p>
+        </div>
+      </div>
+      <div class="shop-desc-title">Về Dịch Vụ Này</div>
+      <div class="shop-desc">Trải nghiệm YouTube tối ưu với YouTube Premium. Xem hàng triệu video không bị gián đoạn bởi quảng cáo, tiếp tục phát video ở chế độ nền khi bạn sử dụng ứng dụng khác, và thưởng thức YouTube Music Premium với hàng triệu bài hát.</div>
+    </div>
+    <!-- Right -->
+    <div class="shop-right">
+      <div class="shop-buy-box">
+        <div class="shop-buy-title">Bắt Đầu Ngay</div>
+        <div class="shop-buy-price-row">
+          <span class="shop-buy-price" id="price-value">69.000đ</span>
+          <span class="shop-buy-old">420.000đ</span>
+        </div>
+        <div class="shop-buy-label" id="duration-label">Truy cập 1 Tháng</div>
+        <div class="shop-buy-save">Tiết kiệm 170.000đ (59% GIẢM)</div>
+        <div class="shop-buy-label">Thời hạn</div>
+        <select class="shop-buy-select" id="duration-select">
+          <option>6 Tháng - 69.000đ (Tiết kiệm 25%)</option>
+        </select>
+        <div class="shop-buy-label">Số lượng</div>
+        <select class="shop-buy-select" id="quantity-select">
+          <option>1 Tài khoản</option>
+          <option>2 Tài khoản (Giảm 5%)</option>
+          <option>3 Tài khoản (Giảm 10%)</option>
+          <option>5 Tài khoản (Giảm 15%)</option>
+        </select>
+        <button class="shop-buy-btn" id="buy-btn">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-13z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1" fill="#fff"/><circle cx="18" cy="20" r="1" fill="#fff"/></svg>
+          Mua Ngay - 119.000đ
+        </button>
+        <div class="shop-buy-guarantee">
+          <div class="shop-buy-guarantee-item">
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="shop-buy-guarantee-label">Tức Thì</div>
+            <div class="shop-buy-guarantee-desc">Giao Hàng</div>
+          </div>
+          <div class="shop-buy-guarantee-item">
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#22c55e" stroke-width="2"/><path stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 12l2 2 4-4"/></svg>
+            <div class="shop-buy-guarantee-label">Full Thời Gian</div>
+            <div class="shop-buy-guarantee-desc">Bảo Hành</div>
+          </div>
+          <div class="shop-buy-guarantee-item">
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#a78bfa" stroke-width="2"/><path stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
+            <div class="shop-buy-guarantee-label">24/7</div>
+            <div class="shop-buy-guarantee-desc">Hỗ Trợ</div>
+          </div>
+        </div>
+        <div class="shop-buy-note">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#2563eb" stroke-width="2"/><path stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 12l2 2 4-4"/></svg>
+          <div>
+            <div style="font-weight: 500; color: #2563eb;">An Toàn & Bảo Mật</div>
+            <div style="font-size: 0.97rem; color: #2563eb;">Tất cả tài khoản được kiểm tra và xác minh. Đảm bảo 100% hoạt động.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="qr-popup" class="qr-popup">
+    <div class="qr-popup-content">
+      <button id="close-qr" class="qr-popup-close">&times;</button>
+      <h2>Quét mã QR để thanh toán</h2>
+      <img id="qr-img" src="" alt="QR Thanh toán" style="width:220px;height:220px;display:block;margin:18px auto 10px auto;">
+      <div class="qr-popup-info">
+        <div><b>Ngân hàng:</b> Techcombank</div>
+        <div><b>Tên tài khoản:</b> KIEU TIEN QUANG</div>
+        <div><b>Số tài khoản:</b> 19039697538016</div>
+        <div><b>Nội dung chuyển khoản:</b> <span id="qr-content">tienquangyoutube</span></div>
+        <div style="color:#2563eb;font-weight:500;margin-top:8px;">Vui lòng chuyển đúng số tiền và nội dung!</div>
+      </div>
+    </div>
+  </div>
+  <script>
+  // Giá gốc cho từng thời hạn
+  const priceMap = {
+    "6 Tháng": 69000,
+  };
+  const discountMap = {
+    1: 0,
+    2: 0.05,
+    3: 0.10,
+    5: 0.15
+  };
+
+  function formatVND(n) {
+    return n.toLocaleString('vi-VN') + 'đ';
+  }
+
+  function updatePrice() {
+    const durationSelect = document.getElementById('duration-select');
+    const durationOption = durationSelect.options[durationSelect.selectedIndex].text;
+    const durationValue = durationOption.split(' - ')[0];
+    const quantity = parseInt(document.getElementById('quantity-select').value, 10);
+    let price = priceMap[durationValue] || 119000;
+    let discount = discountMap[quantity] || 0;
+    let total = price * quantity * (1 - discount);
+    document.getElementById('price-value').textContent = formatVND(total);
+    document.getElementById('buy-btn').innerHTML = `
+      <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-13z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1" fill="#fff"/><circle cx="18" cy="20" r="1" fill="#fff"/></svg>
+      Mua Ngay - ${formatVND(total)}
+    `;
+    document.getElementById('duration-label').textContent = `Truy cập ${durationValue}`;
+  }
+
+  document.getElementById('duration-select').addEventListener('change', updatePrice);
+  document.getElementById('quantity-select').addEventListener('change', updatePrice);
+
+  // Khởi tạo giá đúng khi load trang
+  updatePrice();
+
+  // QR popup logic
+  const buyBtn = document.getElementById('buy-btn');
+  const qrPopup = document.getElementById('qr-popup');
+  const closeQr = document.getElementById('close-qr');
+  const qrImg = document.getElementById('qr-img');
+  const qrContent = document.getElementById('qr-content');
+  buyBtn.onclick = function(e) {
+    e.preventDefault();
+    // Lấy số tiền hiện tại
+    const durationSelect = document.getElementById('duration-select');
+    const durationOption = durationSelect.options[durationSelect.selectedIndex].text;
+    const durationValue = durationOption.split(' - ')[0];
+    const quantity = parseInt(document.getElementById('quantity-select').value, 10);
+    let price = priceMap[durationValue] || 119000;
+    let discount = discountMap[quantity] || 0;
+    let total = Math.round(price * quantity * (1 - discount));
+    // QR URL
+    const qrUrl = `https://img.vietqr.io/image/techcombank-19039697538016-compact2.png?amount=${total}&addInfo=tienquangyoutube&accountName=KIEU%20TIEN%20QUANG`;
+    qrImg.src = qrUrl;
+    qrContent.textContent = 'tienquangyoutube';
+    qrPopup.classList.add('active');
+  };
+  closeQr.onclick = function() {
+    qrPopup.classList.remove('active');
+  };
+  qrPopup.onclick = function(e) {
+    if (e.target === qrPopup) qrPopup.classList.remove('active');
+  };
+</script>
+</body>
+</html>

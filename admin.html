@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tạo mã chia sẻ</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #6366f1 0%, #fbbf24 100%);
+    }
+    .admin-box {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 32px rgba(79,70,229,0.13);
+      padding: 40px 32px 32px 32px;
+      min-width: 340px;
+      max-width: 95vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+    }
+    .admin-title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #4f46e5;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .admin-input {
+      width: 100%;
+      max-width: 320px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      border: 1.5px solid #a78bfa;
+      font-size: 1.1rem;
+      outline: none;
+      margin-bottom: 8px;
+      transition: border 0.18s;
+    }
+    .admin-input:focus {
+      border: 2px solid #6366f1;
+    }
+    .admin-btn {
+      background: linear-gradient(90deg, #6366f1 0%, #fbbf24 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      padding: 12px 32px;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 8px rgba(79,70,229,0.12);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      margin-bottom: 8px;
+    }
+    .admin-btn:hover {
+      background: linear-gradient(90deg, #3730a3 0%, #fbbf24 100%);
+    }
+    .admin-result {
+      font-size: 1.1rem;
+      color: #2563eb;
+      margin-top: 8px;
+      text-align: center;
+      word-break: break-all;
+    }
+    @media (max-width: 600px) {
+      .admin-box { min-width: 0; padding: 24px 8px; }
+      .admin-title { font-size: 1.3rem; }
+      .admin-input, .admin-btn { font-size: 1rem; padding: 10px 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-container">
+    <div class="admin-box">
+      <div class="admin-title">Tạo mã chia sẻ theo ý muốn</div>
+      <input type="text" id="inputMa" class="admin-input" placeholder="Nhập mã bạn muốn tạo" maxlength="20" />
+      <button class="admin-btn" onclick="taoMa()">Tạo mã</button>
+      <p id="ma" class="admin-result"></p>
+    </div>
+  </div>
+  <script>
+    async function taoMa() {
+      const code = document.getElementById('inputMa').value.trim();
+      if (!code) {
+        alert('Vui lòng nhập mã!');
+        return;
+      }
+      const res = await fetch('/api/create', {
+        method: 'POST',
+        body: JSON.stringify({ code }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await res.json();
+      document.getElementById('ma').innerText = 'Mã vừa tạo: ' + data.code;
+    }
+  </script>
+</body>
+</html>

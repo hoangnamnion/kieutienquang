@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nạp tiền vào tài khoản</title>
+    <style>
+        body {
+            background: #f5f8ff;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            gap: 32px;
+            padding-top: 40px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            padding: 32px 28px;
+            min-width: 340px;
+        }
+        .title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #222b45;
+        }
+        .subtitle {
+            color: #7b8190;
+            margin-bottom: 28px;
+        }
+        .amount-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+        .amount-btn {
+            background: #f5f8ff;
+            border: 1.5px solid #e0e7ff;
+            border-radius: 8px;
+            padding: 16px 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #222b45;
+            cursor: pointer;
+            transition: border 0.2s, background 0.2s;
+        }
+        .amount-btn.selected {
+            border: 2px solid #4f8cff;
+            background: #eaf2ff;
+            color: #2563eb;
+        }
+        .other-amount {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+        .other-amount input[type="checkbox"] {
+            accent-color: #4f8cff;
+        }
+        .other-amount label {
+            color: #222b45;
+            font-size: 1rem;
+        }
+        .input-amount {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid #e0e7ff;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            margin-bottom: 18px;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .input-amount:focus {
+            border: 2px solid #4f8cff;
+        }
+        .confirm-btn {
+            width: 100%;
+            padding: 14px 0;
+            background: #4f8cff;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .confirm-btn:disabled {
+            background: #b3c6ff;
+            cursor: not-allowed;
+        }
+        .instructions {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            padding: 28px 24px;
+            min-width: 320px;
+        }
+        .instructions-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .instructions-list {
+            color: #222b45;
+            font-size: 1rem;
+            padding-left: 20px;
+        }
+        .instructions-list li {
+            margin-bottom: 8px;
+        }
+        @media (max-width: 800px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+        }
+        .vietqr-img {
+            width: 250px;
+            height: 300px;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px #0002;
+            border: 2.5px solid #e0e7ff;
+            background: #fff;
+            margin: 0 auto 10px auto;
+            display: block;
+            transition: box-shadow 0.2s, border 0.2s;
+        }
+        .vietqr-img:hover {
+            box-shadow: 0 8px 24px #0003;
+            border: 2.5px solid #4f8cff;
+        }
+        @keyframes popSuccess {
+            0% { transform: scale(0.7); opacity: 0; }
+            80% { transform: scale(1.08); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.18); }
+        }
+    </style>
+</head>
+<body>
+    <div style="padding: 32px 0 0 32px;">
+        <span style="font-size: 1.3rem; cursor: pointer; color: #7b8190;" onclick="window.location.href='index.html'">&#8592;</span>
+    </div>
+    <div class="container" id="depositForm">
+        <div class="card">
+            <div class="title">Nạp tiền vào tài khoản</div>
+            <div class="subtitle">Chọn số tiền bạn muốn nạp vào tài khoản</div>
+            <div class="amount-options">
+                <button class="amount-btn" onclick="selectAmount(59000)">59.000 đ</button>
+                <button class="amount-btn" onclick="selectAmount(59900)">59.900 đ</button>
+                <button class="amount-btn" onclick="selectAmount(59990)">59.990 đ</button>
+                <button class="amount-btn" onclick="selectAmount(59999)">59.999 đ</button>
+            </div>
+            <div class="other-amount">
+                <input type="checkbox" id="otherAmountCheck" onchange="toggleOtherAmount()">
+                <label for="otherAmountCheck">Hoặc nhập số tiền khác</label>
+            </div>
+            <div style="color:#d32f2f;font-size:0.98rem;margin-bottom:10px;font-weight:500;">Chỉ nạp từ 50.000đ trở lên mới tạo được mã </div>
+            <input type="number" id="otherAmountInput" class="input-amount" placeholder="Nhập số tiền" min="50000" disabled oninput="inputOtherAmount()">
+            <button class="confirm-btn" id="confirmBtn" disabled onclick="showPayment()">Xác nhận nạp 0 đ &#8594;</button>
+        </div>
+        <div class="instructions">
+            <div class="instructions-title">
+                <span style="font-size: 1.3rem;">&#128337;</span>
+                Chú Ý 
+            </div>
+            <ol class="instructions-list">
+                <li>Nội dung chuyển khoản là mã tạo </li>
+                <li>Sau khi nạp tiền, bạn vui lòng đợi tôi để được cập nhập mã tạo</li>
+                <li>Tôi sẽ cập nhật mã tạo của bạn trong vòng 1 phút</li>
+                <li>Nếu bạn không nhận được tài khoản, vui lòng liên hệ với tôi</li>
+            </ol>
+        </div>
+    </div>
+    <!-- Giao diện xác nhận thanh toán -->
+    <div class="container" id="paymentSection" style="display:none;">
+        <div class="card" style="min-width:350px;max-width:400px;">
+            <div style="font-weight:600;font-size:1.1rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=40x40&data=techcombank" alt="qr" style="width:24px;height:24px;"> Mã QR thanh toán
+            </div>
+            <div style="background:#fff7ea;border:1px solid #ffe0b2;color:#e67c00;padding:10px 14px;border-radius:8px;font-size:1rem;display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                <span style="font-size:1.2rem;">&#9200;</span> Thời gian còn lại: <span id="timer">10:00</span>
+            </div>
+            <div id="qrLoading" style="display:none;text-align:center;margin-bottom:10px;">
+                <span style="font-size:2rem;">⏳</span> Đang tải mã QR...
+            </div>
+            <img id="vietqrImg" src="" alt="QR thanh toán" class="vietqr-img" style="display:none;">
+            <div style="text-align:center;margin-bottom:12px;">
+                <div style="margin-top:8px;font-size:1.1rem;font-weight:600;color:#d32f2f;">VIETQR</div>
+                <div style="color:#7b8190;font-size:0.95rem;">napas 247 &nbsp; | &nbsp; <b>Techcombank</b></div>
+                <div style="color:#222b45;font-size:0.95rem;">CAO VAN NAM<br>2005838699</div>
+                <div style="color:#7b8190;font-size:0.95rem;">Số tiền: <span id="payAmount">200.000 VND</span></div>
+            </div>
+            <button style="width:100%;background:#f5f8ff;border:none;padding:10px 0;border-radius:8px;color:#2563eb;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-size:1rem;" onclick="copyPaymentInfo()">
+                <span style="font-size:1.2rem;">&#128203;</span> Sao chép thông tin
+            </button>
+        </div>
+        <div class="card" style="min-width:350px;max-width:400px;">
+            <div style="font-weight:600;font-size:1.1rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+                <span style="font-size:1.2rem;">&#128179;</span> Thông tin chuyển khoản
+            </div>
+            <div style="margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+                <span style="font-size:1.1rem;">🏦</span> Ngân hàng: <b style="margin-left:auto;">Techcombank</b>
+            </div>
+            <div style="margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+                <span style="font-size:1.1rem;">#️⃣</span> Số tài khoản: <b style="margin-left:auto;">2005838699</b>
+            </div>
+            <div style="margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+                <span style="font-size:1.1rem;">👤</span> Chủ tài khoản: <b style="margin-left:auto;">CAO VAN NAM</b>
+            </div>
+            <div style="margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+                <span style="font-size:1.1rem;">💰</span> Số tiền: <b style="margin-left:auto;" id="payAmount2">200.000 đ</b>
+            </div>
+            <div style="margin-bottom:16px;display:flex;align-items:center;gap:8px;">
+                <span style="font-size:1.1rem;">📝</span> Nội dung CK: <b style="margin-left:auto;" id="payNote">hoangnam' + (Math.floor(Math.random()*900)+100)</b>
+            </div>
+            <button style="width:100%;background:#e53935;color:#fff;padding:14px 0;border:none;border-radius:8px;font-size:1.1rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;" onclick="cancelPayment()">
+                <span style="font-size:1.2rem;">&#9888;</span> Hủy giao dịch
+            </button>
+        </div>
+    </div>
+    <div id="paymentGuide" style="max-width:420px;margin:32px auto 0 auto;display:none;">
+        <div class="instructions">
+            <div class="instructions-title">
+                <span style="font-size: 1.3rem;">&#128337;</span>
+                Chú Ý 
+            </div>
+            <ol class="instructions-list">
+                <li>Nội dung chuyển khoản là mã tạo </li>
+                <li>Sau khi nạp tiền, bạn vui lòng đợi tôi để được cập nhập mã tạo</li>
+                <li>Tôi sẽ cập nhật mã tạo của bạn trong vòng 1 phút</li>
+                <li>Nếu bạn không nhận được tài khoản, vui lòng liên hệ với tôi</li>
+            </ol>
+        </div>
+    </div>
+    <div id="successAlert" style="display:none;max-width:520px;margin:32px auto 0 auto;background:#e6ffed;border:2.5px solid #42b72a;color:#1b5e20;padding:28px 24px 24px 24px;border-radius:16px;font-size:1.35rem;font-weight:700;text-align:center;box-shadow:0 8px 32px #42b72a22;z-index:9999;position:fixed;left:0;right:0;top:18vh;animation:popSuccess 0.5s cubic-bezier(.68,-0.55,.27,1.55);">
+        <span style="font-size:2.2rem;vertical-align:middle;animation:pulse 1.2s infinite alternate;">&#127881;</span><br>
+        <span style="display:inline-block;margin-top:10px;">Thanh toán thành công!<br>Mã của bạn đã được admin xác nhận.<br><span style='font-size:1.1rem;font-weight:400;'>Bạn sẽ được chuyển về trang chủ sau <span id='successCountdown'>10</span> giây.</span></span>
+    </div>
+    <script>
+        let selectedAmount = 0;
+        function selectAmount(amount) {
+            if (document.getElementById('otherAmountCheck').checked) return;
+            selectedAmount = amount;
+            document.querySelectorAll('.amount-btn').forEach(btn => {
+                btn.classList.remove('selected');
+                if (btn.textContent.replace(/\D/g, '') == amount) {
+                    btn.classList.add('selected');
+                }
+            });
+            updateConfirmBtn();
+        }
+        function toggleOtherAmount() {
+            const checked = document.getElementById('otherAmountCheck').checked;
+            document.getElementById('otherAmountInput').disabled = !checked;
+            if (checked) {
+                selectedAmount = 0;
+                document.querySelectorAll('.amount-btn').forEach(btn => btn.classList.remove('selected'));
+                document.getElementById('otherAmountInput').focus();
+            } else {
+                document.getElementById('otherAmountInput').value = '';
+            }
+            updateConfirmBtn();
+        }
+        function inputOtherAmount() {
+            if (!document.getElementById('otherAmountCheck').checked) return;
+            const val = parseInt(document.getElementById('otherAmountInput').value) || 0;
+            selectedAmount = val;
+            updateConfirmBtn();
+        }
+        function updateConfirmBtn() {
+            const btn = document.getElementById('confirmBtn');
+            btn.textContent = `Xác nhận nạp ${selectedAmount.toLocaleString('vi-VN')} đ →`;
+            btn.disabled = selectedAmount < 50000;
+        }
+        let checkInterval;
+        let redirectTimeout;
+        let countdownInterval;
+        // Hàm kiểm tra mã đã được admin tạo chưa
+        async function checkCodeCreated() {
+            const payNote = document.getElementById('payNote').textContent;
+            try {
+                const response = await fetch('https://lkhoangnam.onrender.com/api/codelink');
+                if (response.ok) {
+                    const codes = await response.json();
+                    const found = codes.find(entry => entry.code === payNote);
+                    if (found) {
+                        document.getElementById('successAlert').style.display = 'block';
+                        clearInterval(checkInterval);
+                        let seconds = 10;
+                        document.getElementById('successCountdown').textContent = seconds;
+                        countdownInterval = setInterval(() => {
+                            seconds--;
+                            document.getElementById('successCountdown').textContent = seconds;
+                            if (seconds <= 0) {
+                                clearInterval(countdownInterval);
+                            }
+                        }, 1000);
+                        redirectTimeout = setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 10000);
+                    } else {
+                        document.getElementById('successAlert').style.display = 'none';
+                        clearInterval(countdownInterval);
+                    }
+                }
+            } catch (e) {
+                // Không làm gì nếu lỗi
+            }
+        }
+        // Hiện giao diện thanh toán, ẩn form chọn số tiền
+        function showPayment() {
+            document.getElementById('depositForm').style.display = 'none';
+            document.getElementById('paymentSection').style.display = 'flex';
+            document.getElementById('paymentGuide').style.display = 'block';
+            // Cập nhật số tiền
+            document.getElementById('payAmount').textContent = selectedAmount.toLocaleString('vi-VN') + ' VND';
+            document.getElementById('payAmount2').textContent = selectedAmount.toLocaleString('vi-VN') + ' đ';
+            // Sinh nội dung chuyển khoản ngẫu nhiên
+            const random3 = Math.floor(Math.random()*900)+100;
+            const payNote = 'hoangnam' + random3;
+            document.getElementById('payNote').textContent = payNote;
+            // Tạo link QR động VietQR
+            const bankId = 'techcombank';
+            const accountNo = '2005838699';
+            const template = 'compact2';
+            const accountName = encodeURIComponent('CAO VAN NAM');
+            const amount = selectedAmount;
+            const addInfo = encodeURIComponent(payNote);
+            const qrUrl = `https://img.vietqr.io/image/${bankId}-${accountNo}-${template}.png?amount=${amount}&addInfo=${addInfo}&accountName=${accountName}`;
+            // Hiện loading, ẩn QR
+            document.getElementById('qrLoading').style.display = 'block';
+            const qrImg = document.getElementById('vietqrImg');
+            qrImg.style.display = 'none';
+            qrImg.onload = function() {
+                document.getElementById('qrLoading').style.display = 'none';
+                qrImg.style.display = 'block';
+            };
+            qrImg.onerror = function() {
+                document.getElementById('qrLoading').innerHTML = '<span style="color:#d32f2f;font-size:1.1rem;">Không tải được mã QR. Vui lòng thử lại!</span>';
+            };
+            qrImg.src = qrUrl;
+            // Reset và bắt đầu lại timer
+            startTimer(10*60);
+            // Bắt đầu kiểm tra mã mỗi 3 giây
+            checkCodeCreated();
+            clearInterval(checkInterval);
+            clearTimeout(redirectTimeout);
+            clearInterval(countdownInterval);
+            checkInterval = setInterval(checkCodeCreated, 3000);
+        }
+        function cancelPayment() {
+            document.getElementById('depositForm').style.display = 'flex';
+            document.getElementById('paymentSection').style.display = 'none';
+            document.getElementById('paymentGuide').style.display = 'none';
+            clearInterval(checkInterval);
+            clearTimeout(redirectTimeout);
+            clearInterval(countdownInterval);
+            document.getElementById('successAlert').style.display = 'none';
+            document.getElementById('qrLoading').style.display = 'none';
+            document.getElementById('vietqrImg').style.display = '';
+        }
+        // Sao chép thông tin chuyển khoản
+        function copyPaymentInfo() {
+            const info = `Ngân hàng: Techcombank\nSố tài khoản: 2005838699\nChủ tài khoản: CAO VAN NAM\nSố tiền: ${selectedAmount.toLocaleString('vi-VN')} đ\nNội dung CK: ${document.getElementById('payNote').textContent}`;
+            navigator.clipboard.writeText(info);
+            alert('Đã sao chép thông tin!');
+        }
+        // Đếm ngược thời gian
+        let timerInterval;
+        function startTimer(duration) {
+            clearInterval(timerInterval);
+            let time = duration;
+            function update() {
+                const min = Math.floor(time/60);
+                const sec = time%60;
+                document.getElementById('timer').textContent = `${min}:${sec.toString().padStart(2,'0')}`;
+                if (time > 0) time--;
+                else clearInterval(timerInterval);
+            }
+            update();
+            timerInterval = setInterval(update, 1000);
+        }
+    </script>
+</body>
+</html>
