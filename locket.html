@@ -96,11 +96,38 @@
         <span id="mavip-status" style="color:#f87171;font-size:0.98rem;margin-left:10px;"></span>
       </div>
       <div id="copy-section" style="display:none;">
+        <div style="background:#fffbe6;border-radius:10px;padding:16px 14px 10px 14px;margin-bottom:14px;box-shadow:0 2px 8px #fbbf2422;">
+          <div style="font-weight:bold;font-size:1.08rem;color:#eab308;text-align:center;margin-bottom:6px;">💛 HƯỚNG DẪN CÀI LOCKET GOLD KW 💛</div>
+          <hr style="border:none;border-top:1.5px dashed #fbbf24;margin:8px 0 12px 0;">
+          <ul style="padding-left:18px;margin:0 0 8px 0;font-size:1rem;color:#444;">
+            <li><b>B1:</b> Xoá <span style="color:#eeff00;">🗑</span> app Locket cũ khỏi điện thoại.</li>
+            <li><b>B2:</b> Tải <span style="color:#007bff;"><b>TestFlight</b></span> (app màu xanh dương) từ App Store. Hoặc Ấn Nút Tải App TestFlight </li>
+            <li><b>B3:</b> Đăng xuất tài khoản <b>App Store</b> của bạn<br><span style="color:#ef4444;">❌ <b>KHÔNG PHẢI tài khoản iCloud!</b></span></li>
+            <li><b>✅ Đăng nhập tài khoản sau:</b>
+              <ul style="margin-top:4px;">
+                <li>Tài khoản: <b>Nút Sao Chép Tài Khoản Bên Dưới</b></li>
+                <li>Mật khẩu: <b>Nút Sao Chép Mật Khẩu Bên Dưới</b></li>
+              </ul>
+              <span style="color:#ef4444;font-size:0.97rem;">⚠️ Mỗi mã chỉ dùng 1 lần. KHÔNG spam mã!</span>
+              <span style="color:#00e1ff;font-size:0.97rem;">Muốn Lấy Mã Liên Hệ <a>Admin</a></span>
+            </li>
+            <li><b>B4:</b> Mở TestFlight và tải app Locket Gold.</li>
+            <li><b>✔️ Ngay sau khi tải xong:</b>
+              <ul style="margin-top:4px;">
+                <li>Xoá TestFlight</li>
+                <li>Đăng xuất tài khoản App Store bên mình</li>
+                <li>Đăng nhập lại tài khoản App Store của bạn</li>
+              </ul>
+            </li>
+            <li><span style="color:#ef4444;">❗ Nếu không làm đúng, app sẽ bị lỗi và bên mình KHÔNG chịu trách nhiệm</span></li>
+            <li><b>B5:</b> Mở Locket<br>Nếu chưa quay được video: Thoát app ➡️ Mở lại<br><span style="color:#22c55e;">🎉 App sẽ được cập nhật lên bản GOLD thành công</span></li>
+          </ul>
+        </div>
         <div style="margin: 18px 0 10px 0; display: flex; gap: 12px;">
           <button class="btn btn-gradient" id="copy-code-btn" style="flex:1;">Sao chép Tài Khoản</button>
           <button class="btn btn-gradient" id="copy-link-btn" style="flex:1;">Sao chép Mật Khẩu</button>
         </div>
-        <button class="btn btn-outline" id="open-link-btn" style="width:100%;margin-top:8px;">Chuyển Tab Đến Link</button>
+        <button class="btn btn-outline" id="open-link-btn" style="width:100%;margin-top:8px;">Tải App TestFlight</button>
         <input type="text" id="locket-code" value="kwanggg205@gmail.com" style="position:absolute;left:-9999px;">
         <input type="text" id="locket-link" value="Loketkw205" style="position:absolute;left:-9999px;">
       </div>
@@ -264,18 +291,21 @@
   };
 
   // Mã VIP logic
-  let currentMavip = '';
+  let currentMavipList = [];
   async function fetchMavip() {
     try {
-      const res = await fetch('api/mavip');
-      currentMavip = await res.text();
-    } catch (e) { currentMavip = ''; }
+      const res = await fetch('https://kieuquangadmin.onrender.com/api/codelink');
+      const data = await res.json();
+      currentMavipList = Array.isArray(data) ? data.map(item => item.code) : [];
+    } catch (e) {
+      currentMavipList = [];
+    }
   }
   fetchMavip();
   setInterval(fetchMavip, 1000);
   document.getElementById('mavip-check-btn').onclick = function() {
     const val = document.getElementById('mavip-input').value.trim();
-    if (val && val === currentMavip) {
+    if (val && currentMavipList.includes(val)) {
       document.getElementById('copy-section').style.display = '';
       document.getElementById('mavip-status').textContent = '✔️ Thành công!';
       document.getElementById('mavip-status').style.color = '#22c55e';
@@ -285,7 +315,8 @@
       document.getElementById('mavip-status').style.color = '#f87171';
     }
   };
+
 </script>
-      <script src="api/baovetrang.js"></script>
+<script src="api/baovetrang.js"></script>
 </body>
 </html>
