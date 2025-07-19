@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tạo mã chia sẻ</title>
+  <title>Quản lý mã chia sẻ</title>
   <link rel="stylesheet" href="style.css">
   <style>
     .admin-container {
@@ -13,6 +13,7 @@
       justify-content: center;
       align-items: center;
       background: linear-gradient(135deg, #6366f1 0%, #fbbf24 100%);
+      padding: 20px;
     }
     .admin-box {
       background: #fff;
@@ -57,11 +58,20 @@
       font-size: 1.1rem;
       box-shadow: 0 2px 8px rgba(79,70,229,0.12);
       cursor: pointer;
-      transition: background 0.2s, color 0.2s;
+      transition: all 0.2s;
       margin-bottom: 8px;
     }
     .admin-btn:hover {
       background: linear-gradient(90deg, #3730a3 0%, #fbbf24 100%);
+      transform: translateY(-1px);
+    }
+    .admin-btn.delete {
+      background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+    .admin-btn.delete:hover {
+      background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
     }
     .admin-result {
       font-size: 1.1rem;
@@ -70,36 +80,176 @@
       text-align: center;
       word-break: break-all;
     }
+    .codes-list {
+      width: 100%;
+      max-width: 500px;
+      margin-top: 20px;
+    }
+    .codes-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #4f46e5;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .code-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      transition: all 0.2s;
+    }
+    .code-item:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+    .code-text {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #1e293b;
+    }
+    .code-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .no-codes {
+      text-align: center;
+      color: #64748b;
+      font-style: italic;
+      padding: 20px;
+    }
+    .refresh-btn {
+      background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+      margin-left: 8px;
+    }
+    .refresh-btn:hover {
+      background: linear-gradient(90deg, #059669 0%, #047857 100%);
+    }
     @media (max-width: 600px) {
-      .admin-box { min-width: 0; padding: 24px 8px; }
+      .admin-box { 
+        min-width: 0; 
+        padding: 24px 16px; 
+      }
       .admin-title { font-size: 1.3rem; }
       .admin-input, .admin-btn { font-size: 1rem; padding: 10px 12px; }
+      .code-item {
+        flex-direction: column;
+        gap: 8px;
+        align-items: stretch;
+      }
+      .code-actions {
+        justify-content: center;
+      }
     }
   </style>
 </head>
 <body>
   <div class="admin-container">
     <div class="admin-box">
-      <div class="admin-title">Tạo mã chia sẻ theo ý muốn</div>
-      <input type="text" id="inputMa" class="admin-input" placeholder="Nhập mã bạn muốn tạo" maxlength="20" />
-      <button class="admin-btn" onclick="taoMa()">Tạo mã</button>
-      <p id="ma" class="admin-result"></p>
+      <div class="admin-title">Quản lý mã chia sẻ</div>
+      
+      <!-- Tạo mã mới -->
+      <div style="width: 100%; text-align: center;">
+        <input type="text" id="inputMa" class="admin-input" placeholder="Nhập mã bạn muốn tạo" maxlength="20" />
+        <button class="admin-btn" onclick="taoMa()">Tạo mã</button>
+        <button class="admin-btn refresh-btn" onclick="loadCodes()">Làm mới</button>
+        <p id="ma" class="admin-result"></p>
+      </div>
+
+      <!-- Danh sách mã -->
+      <div class="codes-list">
+        <div class="codes-title">Danh sách mã hiện có</div>
+        <div id="codesList">
+          <div class="no-codes">Đang tải...</div>
+        </div>
+      </div>
     </div>
   </div>
+
   <script>
+    // Tải danh sách mã khi trang load
+    window.onload = function() {
+      loadCodes();
+    };
+
     async function taoMa() {
       const code = document.getElementById('inputMa').value.trim();
       if (!code) {
         alert('Vui lòng nhập mã!');
         return;
       }
-      const res = await fetch('/api/create', {
-        method: 'POST',
-        body: JSON.stringify({ code }),
-        headers: { 'Content-Type': 'application/json' }
-      });
-      const data = await res.json();
-      document.getElementById('ma').innerText = 'Mã vừa tạo: ' + data.code;
+      
+      try {
+        const res = await fetch('/api/create', {
+          method: 'POST',
+          body: JSON.stringify({ code }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await res.json();
+        
+        if (data.success) {
+          document.getElementById('ma').innerText = '✅ Mã vừa tạo: ' + data.code;
+          document.getElementById('inputMa').value = '';
+          loadCodes(); // Tải lại danh sách
+        } else {
+          document.getElementById('ma').innerText = '❌ Lỗi: ' + (data.message || 'Không thể tạo mã');
+        }
+      } catch (error) {
+        document.getElementById('ma').innerText = '❌ Lỗi kết nối server';
+      }
+    }
+
+    async function loadCodes() {
+      const codesList = document.getElementById('codesList');
+      codesList.innerHTML = '<div class="no-codes">Đang tải...</div>';
+      
+      try {
+        const res = await fetch('/api/codes');
+        const data = await res.json();
+        
+        if (data.codes && data.codes.length > 0) {
+          codesList.innerHTML = data.codes.map(code => `
+            <div class="code-item">
+              <div class="code-text">${code}</div>
+              <div class="code-actions">
+                <button class="admin-btn delete" onclick="xoaMa('${code}')">🗑️ Xóa</button>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          codesList.innerHTML = '<div class="no-codes">Chưa có mã nào được tạo</div>';
+        }
+      } catch (error) {
+        codesList.innerHTML = '<div class="no-codes">❌ Lỗi tải danh sách mã</div>';
+      }
+    }
+
+    async function xoaMa(code) {
+      if (!confirm(`Bạn có chắc muốn xóa mã "${code}" không?`)) {
+        return;
+      }
+      
+      try {
+        const res = await fetch('/api/delete', {
+          method: 'POST',
+          body: JSON.stringify({ code }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await res.json();
+        
+        if (data.success) {
+          alert('✅ Đã xóa mã thành công!');
+          loadCodes(); // Tải lại danh sách
+        } else {
+          alert('❌ Lỗi: ' + (data.message || 'Không thể xóa mã'));
+        }
+      } catch (error) {
+        alert('❌ Lỗi kết nối server');
+      }
     }
   </script>
 </body>
