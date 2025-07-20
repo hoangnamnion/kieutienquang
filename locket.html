@@ -51,6 +51,7 @@
       .shop-buy-box { padding: 10px 2px 8px 2px; }
       .shop-img { width: 120px; height: 120px; }
     }
+    
   </style>
 </head>
 <body>
@@ -200,6 +201,7 @@
       </div>
     </div>
   </div>
+  
   <script>
   // Giá gốc cho từng thời hạn
   const priceMap = {
@@ -247,21 +249,24 @@
   const qrImg = document.getElementById('qr-img');
   const qrContent = document.getElementById('qr-content');
   buyBtn.onclick = function(e) {
-    e.preventDefault();
-    // Lấy số tiền hiện tại
-    const durationSelect = document.getElementById('duration-select');
-    const durationOption = durationSelect.options[durationSelect.selectedIndex].text;
-    const durationValue = durationOption.split(' - ')[0];
-    const quantity = parseInt(document.getElementById('quantity-select').value, 10);
-    let price = priceMap[durationValue] || 119000;
-    let discount = discountMap[quantity] || 0;
-    let total = Math.round(price * quantity * (1 - discount));
-    // QR URL
-    const qrUrl = `https://img.vietqr.io/image/techcombank-19039697538016-compact2.png?amount=${total}&addInfo=tienquanglocket&accountName=KIEU%20TIEN%20QUANG`;
-    qrImg.src = qrUrl;
-    qrContent.textContent = 'tienquanglocket';
-    qrPopup.classList.add('active');
-  };
+  e.preventDefault();
+  const durationSelect = document.getElementById('duration-select');
+  const durationOption = durationSelect.options[durationSelect.selectedIndex].text;
+  const durationValue = durationOption.split(' - ')[0];
+  const quantity = parseInt(document.getElementById('quantity-select').value, 10);
+  let price = priceMap[durationValue] || 119000;
+  let discount = discountMap[quantity] || 0;
+  let total = Math.round(price * quantity * (1 - discount));
+
+  const transferContent = `Loket ${durationValue} ${quantity} TK`;
+  const addInfo = encodeURIComponent(transferContent);
+  const qrUrl = `https://img.vietqr.io/image/techcombank-19039697538016-compact2.png?amount=${total}&addInfo=${addInfo}&accountName=KIEU%20TIEN%20QUANG`;
+
+  qrImg.src = qrUrl;
+  qrContent.textContent = transferContent;
+  qrPopup.classList.add('active');
+};
+
   closeQr.onclick = function() {
     qrPopup.classList.remove('active');
   };
