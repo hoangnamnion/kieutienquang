@@ -257,9 +257,9 @@
     let discount = discountMap[quantity] || 0;
     let total = Math.round(price * quantity * (1 - discount));
     // QR URL
-    const qrUrl = `https://img.vietqr.io/image/techcombank-19039697538016-compact2.png?amount=${total}&addInfo=tienquangnetflix&accountName=KIEU%20TIEN%20QUANG`;
+    const qrUrl = `https://img.vietqr.io/image/techcombank-19039697538016-compact2.png?amount=${total}&addInfo=tienquanglocket&accountName=KIEU%20TIEN%20QUANG`;
     qrImg.src = qrUrl;
-    qrContent.textContent = 'tienquangnetflix';
+    qrContent.textContent = 'tienquanglocket';
     qrPopup.classList.add('active');
   };
   closeQr.onclick = function() {
