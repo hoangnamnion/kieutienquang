@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Netflix Premium - Mua Ngay</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <style>
     body { background: #f7f8fa; }
     .shop-container { max-width: 1200px; margin: 0 auto; padding: 32px 12px; display: flex; gap: 40px; }
@@ -42,32 +42,30 @@
     .shop-buy-guarantee-desc { font-size: 0.93rem; color: #888; }
     .shop-buy-note { background: #eff6ff; color: #2563eb; border-radius: 8px; padding: 12px 14px; font-size: 0.98rem; margin-top: 12px; display: flex; align-items: flex-start; gap: 8px; }
     .shop-buy-note svg { flex-shrink: 0; margin-top: 2px; }
-    @media (max-width: 900px) {
-      .shop-container { flex-direction: column; gap: 24px; }
-      .shop-buy-box { padding: 22px 8px 16px 8px; }
-    }
-    @media (max-width: 600px) {
-      .shop-container { padding: 10px 2px; }
-      .shop-buy-box { padding: 10px 2px 8px 2px; }
-      .shop-img { width: 120px; height: 120px; }
-    }
-    
+    .qr-popup { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 999; }
+    .qr-popup.active { display: flex; }
+    .qr-popup-content { background: #fff; border-radius: 12px; max-width: 420px; width: 100%; padding: 18px; position: relative; }
+    .qr-popup-close { position: absolute; top: 8px; right: 10px; background: transparent; border: none; font-size: 28px; line-height: 1; cursor: pointer; }
+    @media (max-width: 900px) { .shop-container { flex-direction: column; gap: 24px; } .shop-buy-box { padding: 22px 8px 16px 8px; } }
+    @media (max-width: 600px) { .shop-container { padding: 10px 2px; } .shop-buy-box { padding: 10px 2px 8px 2px; } .shop-img { width: 120px; height: 120px; } }
   </style>
 </head>
 <body>
-  <a href="index.html" class="shop-back-btn">
+  <a href="index.html" class="shop-back-btn" style="display:inline-flex;align-items:center;margin:12px 12px 0 12px;text-decoration:none;">
     <svg width="20" height="20" fill="none" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:7px;"><path d="M15 19l-7-7 7-7" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     Về Trang Chủ
   </a>
+
   <div class="shop-container">
     <!-- Left -->
     <div class="shop-left">
       <div class="shop-img-box">
         <div class="shop-img">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuu8BiNlf_OWEEDeBnTUq-EXiYEWzruxH2kTYNS3tjYsSyWa3R_rwmViSx6yP_o8ADKEc&usqp=CAU" alt="YouTube Premium" style="width:90px;height:90px;object-fit:contain;">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuu8BiNlf_OWEEDeBnTUq-EXiYEWzruxH2kTYNS3tjYsSyWa3R_rwmViSx6yP_o8ADKEc&usqp=CAU" alt="YouTube Premium" style="width:90px;height:90px;object-fit:contain;" />
         </div>
         <div class="shop-badge">Giá Tốt Nhất</div>
       </div>
+
       <div class="shop-title">Locket Gold</div>
       <div class="shop-rating">
         <span class="shop-stars">
@@ -79,6 +77,7 @@
         </span>
         <span class="shop-rating-count">4.8 (980 đánh giá)</span>
       </div>
+
       <div class="shop-features-box">
         <div class="shop-features-title">Những Gì Bao Gồm</div>
         <div class="shop-features-list">
@@ -88,15 +87,12 @@
           <p><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#22c55e" stroke-width="2"/><path stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 12l2 2 4-4"/></svg> Đổi icon app</p>
         </div>
       </div>
+
       <div class="shop-desc-title">Về Dịch Vụ Này</div>
       <div class="shop-desc">Thanh Toán Xong Liên Hệ Admin để nhận Mã Code</div>
-      <div id="mavip-box" style="margin: 18px 0 18px 0;">
-        <label for="mavip-input" style="font-weight:500;">Nhập mã VIP để truy cập:</label>
-        <input id="mavip-input" type="text" placeholder="Nhập mã..." style="width:180px;padding:8px 12px;border-radius:8px;border:1.5px solid #e5e7eb;margin:0 8px;">
-        <button id="mavip-check-btn" class="btn btn-gradient" style="padding:8px 18px;">Xác nhận</button>
-        <span id="mavip-status" style="color:#f87171;font-size:0.98rem;margin-left:10px;"></span>
-      </div>
-      <div id="copy-section" style="display:none;">
+
+      <!-- ĐÃ BỎ Ô NHẬP MÃ VIP - COPY SECTION LUÔN HIỂN THỊ -->
+      <div id="copy-section" style="display:block;">
         <div style="background:#fffbe6;border-radius:10px;padding:16px 14px 10px 14px;margin-bottom:14px;box-shadow:0 2px 8px #fbbf2422;">
           <div style="font-weight:bold;font-size:1.08rem;color:#eab308;text-align:center;margin-bottom:6px;">💛 HƯỚNG DẪN CÀI LOCKET GOLD KW 💛</div>
           <hr style="border:none;border-top:1.5px dashed #fbbf24;margin:8px 0 12px 0;">
@@ -129,10 +125,11 @@
           <button class="btn btn-gradient" id="copy-link-btn" style="flex:1;">Sao chép Mật Khẩu</button>
         </div>
         <button class="btn btn-outline" id="open-link-btn" style="width:100%;margin-top:8px;">Tải App TestFlight</button>
-        <input type="text" id="locket-code" value="kwanggg205@gmail.com" style="position:absolute;left:-9999px;">
-        <input type="text" id="locket-link" value="Loketkw205" style="position:absolute;left:-9999px;">
+        <input type="text" id="locket-code" value="kwanggg205@gmail.com" style="position:absolute;left:-9999px;" />
+        <input type="text" id="locket-link" value="Loketkw205" style="position:absolute;left:-9999px;" />
       </div>
     </div>
+
     <!-- Right -->
     <div class="shop-right">
       <div class="shop-buy-box">
@@ -187,11 +184,12 @@
       </div>
     </div>
   </div>
+
   <div id="qr-popup" class="qr-popup">
     <div class="qr-popup-content">
       <button id="close-qr" class="qr-popup-close">&times;</button>
       <h2>Quét mã QR để thanh toán</h2>
-      <img id="qr-img" src="" alt="QR Thanh toán" style="width:220px;height:220px;display:block;margin:18px auto 10px auto;">
+      <img id="qr-img" src="" alt="QR Thanh toán" style="width:220px;height:220px;display:block;margin:18px auto 10px auto;" />
       <div class="qr-popup-info">
         <div><b>Ngân hàng:</b> Techcombank</div>
         <div><b>Tên tài khoản:</b> KIEU TIEN QUANG</div>
@@ -201,127 +199,87 @@
       </div>
     </div>
   </div>
-  
+
   <script>
-  // Giá gốc cho từng thời hạn
-  const priceMap = {
-    "3 Tháng": 30000,
-    "6 Tháng": 50000,
-    "1 Năm": 99000,
-  };
-  const discountMap = {
-    1: 0,
-    2: 0.05,
-    3: 0.10,
-    5: 0.15
-  };
+    // Giá gốc cho từng thời hạn
+    const priceMap = { "3 Tháng": 30000, "6 Tháng": 50000, "1 Năm": 99000 };
+    const discountMap = { 1: 0, 2: 0.05, 3: 0.10, 5: 0.15 };
 
-  function formatVND(n) {
-    return n.toLocaleString('vi-VN') + 'đ';
-  }
+    function formatVND(n) { return n.toLocaleString('vi-VN') + 'đ'; }
 
-  function updatePrice() {
-    const durationSelect = document.getElementById('duration-select');
-    const durationOption = durationSelect.options[durationSelect.selectedIndex].text;
-    const durationValue = durationOption.split(' - ')[0];
-    const quantity = parseInt(document.getElementById('quantity-select').value, 10);
-    let price = priceMap[durationValue] || 119000;
-    let discount = discountMap[quantity] || 0;
-    let total = price * quantity * (1 - discount);
-    document.getElementById('price-value').textContent = formatVND(total);
-    document.getElementById('buy-btn').innerHTML = `
-      <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-13z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1" fill="#fff"/><circle cx="18" cy="20" r="1" fill="#fff"/></svg>
-      Mua Ngay - ${formatVND(total)}
-    `;
-    document.getElementById('duration-label').textContent = `Truy cập ${durationValue}`;
-  }
-
-  document.getElementById('duration-select').addEventListener('change', updatePrice);
-  document.getElementById('quantity-select').addEventListener('change', updatePrice);
-
-  // Khởi tạo giá đúng khi load trang
-  updatePrice();
-
-  // QR popup logic
-  const buyBtn = document.getElementById('buy-btn');
-  const qrPopup = document.getElementById('qr-popup');
-  const closeQr = document.getElementById('close-qr');
-  const qrImg = document.getElementById('qr-img');
-  const qrContent = document.getElementById('qr-content');
-  buyBtn.onclick = function(e) {
-  e.preventDefault();
-  const durationSelect = document.getElementById('duration-select');
-  const durationOption = durationSelect.options[durationSelect.selectedIndex].text;
-  const durationValue = durationOption.split(' - ')[0];
-  const quantity = parseInt(document.getElementById('quantity-select').value, 10);
-  let price = priceMap[durationValue] || 119000;
-  let discount = discountMap[quantity] || 0;
-  let total = Math.round(price * quantity * (1 - discount));
-
-  const transferContent = `Loket ${durationValue} ${quantity} TK`;
-  const addInfo = encodeURIComponent(transferContent);
-  const qrUrl = `https://img.vietqr.io/image/techcombank-19039697538016-compact2.png?amount=${total}&addInfo=${addInfo}&accountName=KIEU%20TIEN%20QUANG`;
-
-  qrImg.src = qrUrl;
-  qrContent.textContent = transferContent;
-  qrPopup.classList.add('active');
-};
-
-  closeQr.onclick = function() {
-    qrPopup.classList.remove('active');
-  };
-  qrPopup.onclick = function(e) {
-    if (e.target === qrPopup) qrPopup.classList.remove('active');
-  };
-
-  // Copy & chuyển tab logic
-  document.getElementById('copy-code-btn').onclick = function() {
-    const codeInput = document.getElementById('locket-code');
-    codeInput.type = 'text';
-    codeInput.select();
-    document.execCommand('copy');
-    codeInput.type = 'hidden';
-    alert('Đã sao chép mã code!');
-  };
-  document.getElementById('copy-link-btn').onclick = function() {
-    const linkInput = document.getElementById('locket-link');
-    linkInput.type = 'text';
-    linkInput.select();
-    document.execCommand('copy');
-    linkInput.type = 'hidden';
-    alert('Đã sao chép link!');
-  };
-  document.getElementById('open-link-btn').onclick = function() {
-    window.open('https://apps.apple.com/vn/app/testflight/id899247664', '_blank');
-  };
-
-  // Mã VIP logic
-  let currentMavipList = [];
-  async function fetchMavip() {
-    try {
-      const res = await fetch('https://kieuquangadmin.onrender.com/api/codelink');
-      const data = await res.json();
-      currentMavipList = Array.isArray(data) ? data.map(item => item.code) : [];
-    } catch (e) {
-      currentMavipList = [];
+    function updatePrice() {
+      const durationSelect = document.getElementById('duration-select');
+      const durationOption = durationSelect.options[durationSelect.selectedIndex].text;
+      const durationValue = durationOption.split(' - ')[0];
+      const quantity = parseInt(document.getElementById('quantity-select').value, 10);
+      let price = priceMap[durationValue] || 119000;
+      let discount = discountMap[quantity] || 0;
+      let total = price * quantity * (1 - discount);
+      document.getElementById('price-value').textContent = formatVND(total);
+      document.getElementById('buy-btn').innerHTML = `
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-13z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1" fill="#fff"/><circle cx="18" cy="20" r="1" fill="#fff"/></svg>
+        Mua Ngay - ${formatVND(total)}
+      `;
+      document.getElementById('duration-label').textContent = `Truy cập ${durationValue}`;
     }
-  }
-  fetchMavip();
-  setInterval(fetchMavip, 1000);
-  document.getElementById('mavip-check-btn').onclick = function() {
-    const val = document.getElementById('mavip-input').value.trim();
-    if (val && currentMavipList.includes(val)) {
-      document.getElementById('copy-section').style.display = '';
-      document.getElementById('mavip-status').textContent = '✔️ Thành công!';
-      document.getElementById('mavip-status').style.color = '#22c55e';
-    } else {
-      document.getElementById('copy-section').style.display = 'none';
-      document.getElementById('mavip-status').textContent = 'Sai mã, vui lòng thử lại!';
-      document.getElementById('mavip-status').style.color = '#f87171';
-    }
-  };
 
-</script>
-<script src="api/baovetrang.js"></script>
+    document.getElementById('duration-select').addEventListener('change', updatePrice);
+    document.getElementById('quantity-select').addEventListener('change', updatePrice);
+    updatePrice(); // Khởi tạo giá đúng khi load trang
+
+    // QR popup logic
+    const buyBtn = document.getElementById('buy-btn');
+    const qrPopup = document.getElementById('qr-popup');
+    const closeQr = document.getElementById('close-qr');
+    const qrImg = document.getElementById('qr-img');
+    const qrContent = document.getElementById('qr-content');
+
+    buyBtn.onclick = function (e) {
+      e.preventDefault();
+      const durationSelect = document.getElementById('duration-select');
+      const durationOption = durationSelect.options[durationSelect.selectedIndex].text;
+      const durationValue = durationOption.split(' - ')[0];
+      const quantity = parseInt(document.getElementById('quantity-select').value, 10);
+      let price = priceMap[durationValue] || 119000;
+      let discount = discountMap[quantity] || 0;
+      let total = Math.round(price * quantity * (1 - discount));
+
+      const transferContent = `Loket ${durationValue} ${quantity} TK`;
+      const addInfo = encodeURIComponent(transferContent);
+      const qrUrl = `https://img.vietqr.io/image/techcombank-19039697538016-compact2.png?amount=${total}&addInfo=${addInfo}&accountName=KIEU%20TIEN%20QUANG`;
+
+      qrImg.src = qrUrl;
+      qrContent.textContent = transferContent;
+      qrPopup.classList.add('active');
+    };
+
+    closeQr.onclick = function () { qrPopup.classList.remove('active'); };
+    qrPopup.onclick = function (e) { if (e.target === qrPopup) qrPopup.classList.remove('active'); };
+
+    // Copy & chuyển tab logic
+    document.getElementById('copy-code-btn').onclick = function () {
+      const codeInput = document.getElementById('locket-code');
+      codeInput.type = 'text';
+      codeInput.select();
+      document.execCommand('copy');
+      codeInput.type = 'hidden';
+      alert('Đã sao chép mã code!');
+    };
+
+    document.getElementById('copy-link-btn').onclick = function () {
+      const linkInput = document.getElementById('locket-link');
+      linkInput.type = 'text';
+      linkInput.select();
+      document.execCommand('copy');
+      linkInput.type = 'hidden';
+      alert('Đã sao chép link!');
+    };
+
+    document.getElementById('open-link-btn').onclick = function () {
+      window.open('https://apps.apple.com/vn/app/testflight/id899247664', '_blank');
+    };
+    // ĐÃ LOẠI BỎ TOÀN BỘ LOGIC MÃ VIP (fetchMavip, interval, kiểm tra nút)
+  </script>
+  <script src="api/baovetrang.js"></script>
 </body>
 </html>
