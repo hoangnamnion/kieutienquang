@@ -57,4 +57,128 @@
     .logo .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 4px rgba(88,101,242,.2); }
     .eyebrow { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
 
-    h1 { font-size: clamp(40px, 6vw, 64px); line-height: 1.05; margin: 6px 0 10px
+    h1 { font-size: clamp(40px, 6vw, 64px); line-height: 1.05; margin: 6px 0 10px; }
+    p { margin: 0; color: var(--muted); font-size: clamp(15px, 2.3vw, 17px); }
+
+    .grid { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: center; margin-top: 22px; }
+    @media (min-width: 720px) { .grid { grid-template-columns: 1.2fr .8fr; gap: 28px; } }
+
+    .big404 {
+      font-weight: 800; letter-spacing: .02em; position: relative; display: inline-block;
+      background: linear-gradient(180deg, var(--text), rgba(230,233,245,.55));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 8px 24px rgba(0,0,0,.15);
+    }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+    .btn { --btn-bg: var(--primary); --btn-color: #fff; --btn-border: transparent;
+      display: inline-flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 12px;
+      border: 1px solid var(--btn-border); background: var(--btn-bg); color: var(--btn-color); text-decoration: none; font-weight: 600;
+      transition: transform .12s ease, filter .15s ease, box-shadow .2s ease; box-shadow: 0 8px 24px rgba(88,101,242,.25);
+    }
+    .btn:hover { transform: translateY(-1px); filter: brightness(1.03); }
+    .btn:active { transform: translateY(0); }
+    .btn.secondary { --btn-bg: transparent; --btn-color: var(--text); --btn-border: rgba(255,255,255,.18); box-shadow: none; }
+
+    .illus {
+      width: 100%; aspect-ratio: 1.2/1; border-radius: 14px; overflow: hidden;
+      background:
+        radial-gradient(120px 80px at 20% 30%, rgba(88,101,242,.25), transparent 60%),
+        radial-gradient(100px 70px at 80% 20%, rgba(16,185,129,.25), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: var(--shadow);
+      position: relative; display: grid; place-items: center;
+    }
+    .illus svg { width: 72%; max-width: 360px; opacity: .95; }
+
+    footer { margin-top: 16px; font-size: 12px; color: var(--muted); text-align: center; }
+
+    /* Small animation */
+    @keyframes floaty { 0% { transform: translateY(0) } 50% { transform: translateY(-6px) } 100% { transform: translateY(0) } }
+    .floaty { animation: floaty 6s ease-in-out infinite; }
+  </style>
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+  <main class="wrap" role="main">
+    <section class="card" aria-labelledby="title-404">
+      <a class="logo" href="/" aria-label="Về trang chủ">
+        <span class="dot" aria-hidden="true"></span>
+        <span><strong>Thương hiệu</strong></span>
+      </a>
+
+      <div class="grid">
+        <div>
+          <div class="eyebrow">Lỗi 404</div>
+          <h1 id="title-404"><span class="big404">404</span> — Không tìm thấy trang</h1>
+          <p>Xin lỗi! Trang bạn đang tìm có thể đã bị xóa, đổi tên hoặc tạm thời không tồn tại. Hãy thử các lựa chọn bên dưới.</p>
+          <div class="actions">
+            <a class="btn" href="/" id="homeBtn">Về trang chủ</a>
+            <button class="btn secondary" id="backBtn" type="button">Quay lại</button>
+            <a class="btn secondary" href="mailto:contact@example.com">Liên hệ hỗ trợ</a>
+          </div>
+        </div>
+        <div class="illus floaty" aria-hidden="true">
+          <!-- Decorative SVG illustration -->
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="currentColor" stop-opacity="0.95"/>
+                <stop offset="1" stop-color="currentColor" stop-opacity="0.4"/>
+              </linearGradient>
+            </defs>
+            <g opacity="0.9">
+              <circle cx="100" cy="100" r="70" stroke="currentColor" stroke-width="2" opacity=".25" />
+              <path d="M40 120c20-40 100-40 120 0" stroke="currentColor" stroke-width="2" opacity=".25" />
+              <rect x="55" y="60" width="90" height="60" rx="10" stroke="currentColor" stroke-width="2"/>
+              <circle cx="100" cy="90" r="6" fill="currentColor"/>
+              <rect x="75" y="105" width="50" height="6" rx="3" fill="currentColor" opacity=".9"/>
+              <text x="100" y="50" text-anchor="middle" font-size="18" fill="currentColor" opacity=".9">404</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <footer>
+        <span id="tip"></span>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    // Nút quay lại
+    document.getElementById('backBtn').addEventListener('click', () => {
+      if (history.length > 1) history.back();
+      else window.location.href = '/';
+    });
+
+    // Gợi ý đường dẫn gần đúng (simple tip)
+    (function() {
+      const path = location.pathname.replace(/\/+/, '/');
+      const guess = path
+        .toLowerCase()
+        .replace(/index\.(html|htm)$/, '')
+        .replace(/\.html?$/, '')
+        .replace(/[^a-z0-9\/-]/g, '');
+      const parts = guess.split('/').filter(Boolean);
+      const base = '/';
+      let suggestion = base;
+      if (parts.length > 1) suggestion += parts.slice(0, -1).join('/') + '/';
+      const tip = document.getElementById('tip');
+      tip.textContent = suggestion !== '/' ? `Gợi ý: thử thư mục \"${suggestion}\" hoặc dùng nút Quay lại.` : 'Gợi ý: dùng nút Quay lại hoặc về trang chủ.';
+    })();
+
+    // Ngăn người dùng kẹt ở trang 404 nếu là trang chủ SPA đẩy sai route
+    // (Ví dụ deploy tĩnh). Sau 6 giây tự về home.
+    setTimeout(() => {
+      const fromSPA = !!document.referrer && new URL(document.referrer).origin === location.origin;
+      if (fromSPA) {
+        // Chỉ chuyển nếu URL hiện tại không tồn tại và referrer cùng origin
+        // Bạn có thể xóa dòng dưới nếu không muốn tự chuyển
+        // window.location.replace('/');
+      }
+    }, 6000);
+  </script>
+</body>
+</html>
